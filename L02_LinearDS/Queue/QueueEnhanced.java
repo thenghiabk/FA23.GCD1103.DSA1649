@@ -1,0 +1,140 @@
+package fgw.L02_LinearDS.Queue;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class QueueEnhanced<E> implements AbstractQueue<E> {
+    private Node<E> head;
+    private Node<E> tail;
+
+    private int size;
+    public QueueEnhanced( ) {
+        head = null;
+        tail = null;
+    }
+    @Override
+    public void offer( E data ) {
+        Node<E> newNode = new Node<>( data );
+        if ( head == null ) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            tail = newNode;
+        }
+        size++;
+    }
+    @Override
+    public E poll( ) {
+        if ( head == null ) {
+            throw new NoSuchElementException( );
+        }
+        E data = head.data;
+        if ( size == 1 ) {
+            head = null;
+            tail = null;
+        } else {
+            Node<E> next = head.next;
+            head.next = null;
+            head = next;
+        }
+        size--;
+        return data;
+    }
+    @Override
+    public E peek( ) {
+        if ( head == null ) {
+            throw new NoSuchElementException( );
+        }
+        return head.data;
+    }
+    @Override
+    public int size( ) {
+        return size;
+    }
+    @Override
+    public boolean isEmpty( ) {
+        return head == null; // or size == 0
+    }
+    @Override
+    public Iterator<E> iterator( ) {
+        return new Iterator<>( ) {
+            private Node<E> current = head;
+            public boolean hasNext( ) {
+                return current != null;
+            }
+            public E next( ) {
+                if ( !hasNext( ) ) {
+                    throw new NoSuchElementException( );
+                }
+                E element = current.data;
+                current = current.next;
+                return element;
+            }
+        };
+    }
+    // toString method to represent the queue as a string
+    @Override
+    public String toString( ) {
+        StringBuilder result = new StringBuilder( "[" );
+        Node<E> current = head;
+
+        while ( current != null ) {
+            result.append( current.data );
+            if ( current.next != null ) {
+                result.append( ", " );
+            }
+            current = current.next;
+        }
+        result.append( "]" );
+        return result.toString( );
+    }
+    private static class Node<E> {
+        private E data;
+        private Node<E> next;
+        public Node( E data ) {
+            this.data = data;
+        }
+    }
+}
+
+class QueueEnhancedTest {
+    public static void main( String[] args ) {
+        QueueEnhanced<Integer> queueEnhanced = new QueueEnhanced<>( );
+
+        queueEnhanced.offer( 10 );
+        queueEnhanced.offer( 20 );
+        queueEnhanced.offer( 30 );
+
+        System.out.println( "Queue: " + queueEnhanced ); // Should print [10, 20, 30]
+
+        System.out.println( "Poll: " + queueEnhanced.poll( ) ); // Should print 10
+
+        System.out.println( "Queue after poll: " + queueEnhanced ); // Should print [20, 30]
+
+        queueEnhanced.offer( 40 );
+
+        System.out.println( "Queue after offer: " + queueEnhanced ); // Should print [20, 30, 40]
+
+        System.out.println( "Peek: " + queueEnhanced.peek( ) ); // Should print 20
+
+        System.out.println( "Size: " + queueEnhanced.size( ) ); // Should print 3
+
+        System.out.println( "Is Empty: " + queueEnhanced.isEmpty( ) ); // Should print false
+
+        System.out.println( queueEnhanced ); // prints out current queue
+
+        System.out.println( "Poll: " + queueEnhanced.poll( ) );
+        System.out.println( "Poll: " + queueEnhanced.poll( ) );
+        System.out.println( "Poll: " + queueEnhanced.poll( ) );
+        // System.out.println( "Poll: " + queue.poll( ) ); // uncommenting this line can cause error
+
+        QueueEnhanced<String> stringQueueEnhanced = new QueueEnhanced<>( );
+
+        stringQueueEnhanced.offer( "Hello" );
+        stringQueueEnhanced.offer( "World" );
+
+        System.out.println( stringQueueEnhanced.poll( ) );  // Output: Hello
+        System.out.println( stringQueueEnhanced.peek( ) );  // Output: World
+    }
+}

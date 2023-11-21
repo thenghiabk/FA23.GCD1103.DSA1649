@@ -1,8 +1,6 @@
 package fgw.L02_LinearDS.ArrayList;
 
-import java.util.Queue;
-
-public interface List<E> extends Iterable<E> {
+public interface AbstractList<E> extends Iterable<E> {
     boolean add( E element );
     boolean add( int index, E element );
     E get( int index );
