@@ -13,18 +13,19 @@ public class LinkedListStack<E> implements AbstractStack<E> {
     // Constructor
     public LinkedListStack( ) {
         top = null;
+        size = 0;
     }
     // Push an element onto the stack
     @Override
-    public void push( E data ) {
-        Node<E> newNode = new Node<>( data );
+    public void push( E element ) {
+        Node<E> newNode = new Node<>( element );
         if ( isEmpty( ) ) {
             top = newNode;
         } else {
             newNode.next = top;
             top = newNode;
-            size++;
         }
+        size++;
     }
     // Pop an element from the stack
     @Override
@@ -32,11 +33,12 @@ public class LinkedListStack<E> implements AbstractStack<E> {
         if ( isEmpty( ) ) {
             throw new NoSuchElementException( );
         }
-
-        E data = top.data;
-        top = top.next;
+        E element = top.element;
+        Node<E> next = top.next;
+        top.next = null;
+        top = next;
         size--;
-        return data;
+        return element;
     }
     // Peek at the top element without removing it
     @Override
@@ -44,7 +46,7 @@ public class LinkedListStack<E> implements AbstractStack<E> {
         if ( isEmpty( ) ) {
             throw new NoSuchElementException( );
         }
-        return top.data;
+        return top.element;
     }
     @Override
     public int size( ) {
@@ -69,9 +71,9 @@ public class LinkedListStack<E> implements AbstractStack<E> {
                 if ( !hasNext( ) ) {
                     throw new NoSuchElementException( );
                 }
-                E data = current.data;
+                E element = current.element;
                 current = current.next;
-                return data;
+                return element;
             }
         };
     }
@@ -81,7 +83,7 @@ public class LinkedListStack<E> implements AbstractStack<E> {
         Node<E> current = top;
 
         while ( current != null ) {
-            result.append( current.data );
+            result.append( current.element );
             if ( current.next != null ) {
                 result.append( ", " );
             }
@@ -92,10 +94,10 @@ public class LinkedListStack<E> implements AbstractStack<E> {
         return result.toString( );
     }
     private static class Node<E> {
-        private E data;
+        private E element;
         private Node<E> next;
-        public Node( E data ) {
-            this.data = data;
+        public Node( E element ) {
+            this.element = element;
         }
     }
 }
@@ -103,7 +105,7 @@ public class LinkedListStack<E> implements AbstractStack<E> {
 class LinkedListStackTest {
     public static void main( String[] args ) {
         /**
-         * Integer Linked List
+         * Integer Linked List Stack
          */
         LinkedListStack<Integer> linkedListStack = new LinkedListStack<>( );
 
@@ -122,7 +124,7 @@ class LinkedListStackTest {
         System.out.println( linkedListStack );
 
         /**
-         * String Linked List
+         * String Linked List Stack
          */
 
         LinkedListStack<String> stringStack = new LinkedListStack<>( );

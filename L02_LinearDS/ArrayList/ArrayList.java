@@ -39,22 +39,19 @@ public class ArrayList<E> implements AbstractList<E> {
     public E get( int index ) {
         if ( index < 0 || index >= size ) throw new IndexOutOfBoundsException( "Index out of bound:"
                 + index + " out of " + size );
-        return getElement( index );
-    }
-    private E getElement( int index ) {
-        return (E) elements[ index ];
+        return elements[ index ];
     }
     public E set( int index, E element ) {
         if ( index < 0 || index >= size ) throw new IndexOutOfBoundsException( "Index out of bound:"
                 + index + " out of " + size );
-        E oldElement = getElement( index );
+        E oldElement = elements[ index ];
         elements[ index ] = element;
         return oldElement;
     }
     public E remove( int index ) {
         if ( index < 0 || index >= size ) throw new IndexOutOfBoundsException( "Index out of bound:"
                 + index + " out of " + size );
-        E removedElement = getElement( index );
+        E removedElement = elements[ index ];
 
         for ( int i = index; i < size - 1; i++ ) {
             elements[ i ] = elements[ i + 1 ];
@@ -104,7 +101,7 @@ public class ArrayList<E> implements AbstractList<E> {
 
             @Override
             public E next( ) {
-                E element = getElement( index );
+                E element = elements[ index ];
                 index++;
                 return element;
             }

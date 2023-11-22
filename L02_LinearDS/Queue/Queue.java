@@ -12,7 +12,7 @@ public class Queue<E> implements AbstractQueue<E> {
     @Override
     public void offer( E data ) {
         Node<E> newNode = new Node<>( data );
-        if ( head == null ) {
+        if ( isEmpty( ) ) {
             head = newNode;
         } else {
             Node<E> current = head;
@@ -25,10 +25,10 @@ public class Queue<E> implements AbstractQueue<E> {
     }
     @Override
     public E poll( ) {
-        if ( head == null ) {
+        if ( isEmpty( ) ) {
             throw new NoSuchElementException( );
         }
-        E data = head.data;
+        E data = head.element;
         if ( size == 1 ) {
             head = null;
         } else {
@@ -41,10 +41,10 @@ public class Queue<E> implements AbstractQueue<E> {
     }
     @Override
     public E peek( ) {
-        if ( head == null ) {
+        if ( isEmpty( ) ) {
             throw new NoSuchElementException( );
         }
-        return head.data;
+        return head.element;
     }
     @Override
     public int size( ) {
@@ -65,7 +65,7 @@ public class Queue<E> implements AbstractQueue<E> {
                 if ( !hasNext( ) ) {
                     throw new NoSuchElementException( );
                 }
-                E element = current.data;
+                E element = current.element;
                 current = current.next;
                 return element;
             }
@@ -78,7 +78,7 @@ public class Queue<E> implements AbstractQueue<E> {
         Node<E> current = head;
 
         while ( current != null ) {
-            result.append( current.data );
+            result.append( current.element );
             if ( current.next != null ) {
                 result.append( ", " );
             }
@@ -88,10 +88,10 @@ public class Queue<E> implements AbstractQueue<E> {
         return result.toString( );
     }
     private static class Node<E> {
-        private E data;
+        private E element;
         private Node<E> next;
-        public Node( E data ) {
-            this.data = data;
+        public Node( E element ) {
+            this.element = element;
         }
     }
 }
@@ -132,7 +132,7 @@ class QueueTest {
         stringQueueEnhanced.offer( "Hello" );
         stringQueueEnhanced.offer( "World" );
 
-        System.out.println( stringQueueEnhanced.poll( ) );  // Output: Hello
-        System.out.println( stringQueueEnhanced.peek( ) );  // Output: World
+        System.out.println( stringQueueEnhanced.poll( ) );  // Should print "Hello"
+        System.out.println( stringQueueEnhanced.peek( ) );  // Should print "World"
     }
 }
