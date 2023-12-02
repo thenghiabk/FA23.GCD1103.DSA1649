@@ -2,8 +2,8 @@ package fgw.L03_Recursion_Backtracking.Recursion;
 
 public class Fibonacci {
     public static void main( String[] args ) {
-        // index: 0  1  2  3  4  5  6  7  8
-        // Fibo:  0  1  1  2  3  5  8  13 21
+        //              index: 0  1  2  3  4  5  6  7  8
+        // Fibonacci Sequence: 0  1  1  2  3  5  8  13 21
 
         System.out.println( fibonacci( 4 ) ); // should print 3
 
